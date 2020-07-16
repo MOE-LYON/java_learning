@@ -6,12 +6,11 @@ import org.apache.ibatis.cache.Cache;
 
 public class RedisCache implements Cache {
 
-
     private final String id;
     private final RedisClient redisClient;
     public RedisCache(String id) {
         this.id = id;
-        redisClient = RedisClient.create("redis://localhost/0");
+        redisClient = RedisClient.create("redis://moelyon123@127.0.0.1:6666/0?timeout=10s");
     }
 
     public static void main(String[] args) {
