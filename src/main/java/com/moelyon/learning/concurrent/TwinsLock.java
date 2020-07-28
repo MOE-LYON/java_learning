@@ -10,7 +10,7 @@ public class TwinsLock implements Lock {
     private static class Sync extends AbstractQueuedSynchronizer {
 
         public Sync(int count) {
-            if(count<=0){
+            if (count <= 0) {
                 throw new IllegalArgumentException("can't be zero");
             }
             setState(count);
@@ -18,22 +18,23 @@ public class TwinsLock implements Lock {
 
         @Override
         protected int tryAcquireShared(int arg) {
-            for(;;){
+            for (; ; ) {
                 int currentState = getState();
-                int newState = currentState-arg;
+                int newState = currentState - arg;
 
-                if(newState <0 || compareAndSetState(currentState,newState)){
+                if (newState < 0 || compareAndSetState(currentState, newState)) {
                     return newState;
                 }
             }
         }
+
         @Override
         protected boolean tryReleaseShared(int arg) {
-            for(;;){
+            for (; ; ) {
                 int currentState = getState();
-                int newState = currentState+arg;
+                int newState = currentState + arg;
 
-                if(compareAndSetState(currentState,newState)){
+                if (compareAndSetState(currentState, newState)) {
                     return true;
                 }
             }
@@ -41,6 +42,7 @@ public class TwinsLock implements Lock {
     }
 
     private Sync sync = new Sync(2);
+
     @Override
     public void lock() {
         sync.acquireShared(1);
@@ -72,11 +74,11 @@ public class TwinsLock implements Lock {
     }
 }
 
-class TwinsLockTest{
+class TwinsLockTest {
     public static void main(String[] args) throws InterruptedException {
         final Lock lock = new TwinsLock();
 
-        class Worker implements Runnable{
+        class Worker implements Runnable {
 
             @Override
             public void run() {
@@ -95,15 +97,19 @@ class TwinsLockTest{
                 }
             }
         }
-        for(int i=0; i<5;++i){
+        for (int i = 0; i < 5; ++i) {
             Thread t = new Thread(new Worker());
             t.setDaemon(true);
             t.start();
         }
 
-        for(int i=0; i<10; ++i){
+        for (int i = 0; i < 10; ++i) {
             TimeUnit.SECONDS.sleep(4);
             System.out.println();
         }
+    }
+
+    void test() {
+        System.out.println("233");
     }
 }
