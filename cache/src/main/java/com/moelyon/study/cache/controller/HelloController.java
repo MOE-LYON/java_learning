@@ -2,8 +2,11 @@ package com.moelyon.study.cache.controller;
 
 import com.moelyon.study.cache.entity.Coffee;
 import lombok.Data;
+import lombok.Lombok;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -21,8 +24,13 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author moelyon
@@ -32,6 +40,7 @@ import java.util.Locale;
 @Slf4j
 public class HelloController {
 
+    Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @GetMapping("")
     public String hello(){
@@ -66,7 +75,6 @@ public class HelloController {
         RequestEntity<Void> entity = RequestEntity
                 .get(components.toUri())
                 .build();
-
         restTemplate.exchange(entity,String.class);
 
         log.info(coffeeOrder.toString());
@@ -76,5 +84,12 @@ public class HelloController {
     @GetMapping(value = "",params ={"name"})
     public String hello(@RequestParam() String name){
         return String.format(Locale.CHINESE,"HELLO %s",name);
+    }
+
+    @GetMapping(value = "222")
+    public String qaq() {
+
+
+        return null;
     }
 }
