@@ -1,5 +1,6 @@
 package com.moelyon.learning.algorithm;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -82,7 +83,7 @@ public class ParallelQuickSort {
 
     }
 
-    private static final long numOfArray = 400000;
+    private static final long numOfArray = 500000;
     public static void main(String[] args) {
         ForkJoinPool pool = new ForkJoinPool();
 
@@ -107,8 +108,8 @@ public class ParallelQuickSort {
 
         ints = new Random().ints().limit(numOfArray).toArray();
         current = System.currentTimeMillis();
-        com.moelyon.learning.algorithm.QuickSort.quickSort(ints);
-
+//        com.moelyon.learning.algorithm.QuickSort.quickSort(ints);
+        Arrays.sort(ints);
         System.out.println(" one thread cost time is " + (System.currentTimeMillis()-current) +" ms");
 
         for(int i=0; i<ints.length-1; ++i){
